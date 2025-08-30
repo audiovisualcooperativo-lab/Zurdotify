@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <title>Zurdotify – Música libre</title>
+    <meta name="theme-color" content="#0b0b10">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Performance hints for Archive.org/Openverse -->
+    <link rel="dns-prefetch" href="https://archive.org">
+    <link rel="preconnect" href="https://archive.org" crossorigin><!-- Graffiti font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+
+    <!-- === SEO basic === -->
+    <meta name="description" content="Zurdotify: reproductor de música libre con crossfade, playlists y búsqueda en Internet Archive.">
+    <meta name="keywords" content="música libre, playlists, crossfade, Internet Archive, Zurdotify, Alquimix, reproductor web">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandex" content="all">
+    <meta name="author" content="Alquimix">
+    <link rel="canonical" href="https://tu-dominio-ejemplo.com/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Zurdotify – Música libre">
+    <meta property="og:description" content="Zurdotify: reproductor de música libre con crossfade, playlists y búsqueda en Internet Archive.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tu-dominio-ejemplo.com/">
+    <meta property="og:image" content="img/logo_1200x630_nocrop.png">
+    <meta property="og:locale" content="es_AR">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zurdotify – Música libre">
+    <meta name="twitter:description" content="Zurdotify: reproductor de música libre con crossfade, playlists y búsqueda en Internet Archive.">
+    <meta name="twitter:image" content="/assets/logo-og.png">
+    <!-- JSON-LD: WebSite + Organization -->
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "WebSite", "name": "Zurdotify – Música libre", "url": "https://tu-dominio-ejemplo.com/", "description": "Zurdotify: reproductor de música libre con crossfade, playlists y búsqueda en Internet Archive.", "inLanguage": "es-AR", "potentialAction": {"@type": "SearchAction", "target": "https://tu-dominio-ejemplo.com/?q={search_term_string}", "query-input": "required name=search_term_string"}, "publisher": {"@type": "Organization", "name": "Zurdotify", "url": "https://tu-dominio-ejemplo.com/", "logo": {"@type": "ImageObject", "url": "/assets/logo-og.png"}}}
+    </script>
+    <!-- Favicons (actualizables) -->
+    <link id="dynamic-favicon" rel="icon" href="favicon.ico" sizes="any">
+    <link id="dynamic-favicon32" rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link id="dynamic-apple" rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<script>
+// Silenciar SecurityError por sessionStorage/localStorage en Brave/contexts restringidos
+(function(){
+  function isStorageSecurityError(x){
+    if (!x) return false;
+    var msg = String((x.message||x)).toLowerCase();
+    return msg.indexOf("failed to read the 'sessionstorage' property") !== -1
+        || msg.indexOf("failed to read the 'localstorage' property") !== -1
+        || (msg.indexOf("securityerror") !== -1 && (msg.indexOf("sessionstorage") !== -1 || msg.indexOf("localstorage") !== -1));
+  }
+  window.addEventListener('error', function(ev){
+    if (isStorageSecurityError(ev.error) || isStorageSecurityError(ev.message)) {
+      ev.preventDefault();
+      return true;
+    }
+  }, true);
+  window.addEventListener('unhandledrejection', function(ev){
+    var r = ev.reason || {};
+    if (isStorageSecurityError(r)) {
+      ev.preventDefault();
+    }
+  });
+})();
+</script>
+</head>
+<body>
+<div class="bg-layer" aria-hidden="true"></div>
+<header>
+        <button id="menu" class="icon-btn only-mobile" type="button" aria-label="Abrir panel" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <div class="brand"><img class="brand-logo" src="img/logo_1200x630_nocrop.png" alt="Zurdotify logo"><div class="logo">Zurdotify</div></div>
+        <!-- Buscador con icono neon -->
+<div class="search">
+  <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gradSearch" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="var(--a1)"/>
+        <stop offset="1" stop-color="var(--a2)"/>
+      </linearGradient>
+      <filter id="glowSearch">
+        <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="var(--a1)" flood-opacity=".9"/>
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="var(--a2)" flood-opacity=".65"/>
+      </filter>
+    </defs>
+    <circle cx="10" cy="10" r="6.5" fill="none" stroke="url(#gradSearch)" stroke-width="2" filter="url(#glowSearch)"/>
+    <line x1="15.5" y1="15.5" x2="22" y2="22" stroke="url(#gradSearch)" stroke-width="2" stroke-linecap="round" filter="url(#glowSearch)"/>
+  </svg>
+  <input id="q" type="text" placeholder="Buscar artista… (ej. Beethoven, Cerati, LoFi)"/>
+</div>
+        <button id="filtersBtn" class="icon-btn only-mobile" type="button" title="Filtros">⚙️</button>
+        <div class="filters-inline only-desktop" id="filtersInline">
+            <label class="switch"><input id="crossfadeToggle_d" type="checkbox"/><span>Crossfade</span></label>
+<label class="switch only-desktop" title="Visuales (neón)"><input id="vizToggle_d" type="checkbox"/><span>Visuales</span></label>
+<label class="switch only-desktop" title="Pantalla completa (modo fiesta)"><input id="vizFsToggle_d" type="checkbox"/><span>Full Screen</span></label>
+<div class="chips" id="provChips_d"><span class="chip on" data-prov="archive">Internet Archive</span></div>
+        </div>
+    </header>
+    
+    <div class="layout">
+        <aside class="sidebar" id="sidebar" aria-label="Resultados">
+            <details id="acc-albums" open><summary><h2>Álbumes / Agrupaciones</h2><span>▼</span></summary>
+                <div class="acc-body"><div id="albums"></div><div class="empty" id="albums-empty">Escribe el nombre de un artista para listar sus lanzamientos.</div></div>
+            </details>
+            <details id="acc-pl"><summary><h2>Mis Playlists</h2><span>▼</span></summary>
+                <div class="acc-body"><div class="pl-empty" id="pl-empty">Aún no tenés playlists.</div><div id="playlists"></div><button id="newPl" class="sm-btn" type="button" style="width:100%;margin-top:8px">+ Nueva playlist</button>
+<div style="display:flex;gap:8px;margin-top:8px">
+  <button id="btnExportPl" class="sm-btn" type="button" style="flex:1">⬇️ Exportar</button>
+  <button id="btnImportPl" class="sm-btn" type="button" style="flex:1">⬆️ Importar</button>
+</div></div>
+            </details>
+        </aside>
+        <main><div class="content" id="content">
+      <section id="homeShelf" class="home-shelf" aria-label="Nuestras Recomendaciones">
+        <header class="home-header">
+          <h2>Nuestras Recomendaciones</h2>
+          <div class="home-actions"><button id="homeRefresh" class="sm-btn" type="button">Actualizar</button></div>
+        </header>
+        <div id="homeGrid" class="home-grid"></div>
+      </section><div class="empty">Selecciona un álbum o playlist.</div></div></main>
+    </div>
+    
+    <div id="overlay"></div>
+    
+    <!-- PLAYER -->
+    <div class="player" id="player" aria-label="Reproductor">
+        <div class="p-left">
+            <img id="p-cover" class="p-cover" src="https://archive.org/images/notfound.png" alt="Portada"/>
+            <div><div class="p-title" id="p-title">—</div><div class="p-artist" id="p-artist">—</div></div>
+        </div>
+    
+        <div>
+            <div class="buttons" role="group" aria-label="Controles">
+                <button class="icon-btn" id="prev" type="button" title="Anterior">⏮</button>
+                <button class="icon-btn play" id="play" type="button" title="Play/Pause">▶</button>
+                <button class="icon-btn" id="next" type="button" title="Siguiente">⏭</button>
+    
+                <!-- Botones visibles en ESCRITORIO -->
+                <button class="icon-btn only-desktop" id="deskShuffle" type="button" title="Aleatorio (ON/OFF)">🔀</button>
+                <button class="icon-btn only-desktop" id="deskRepeat" type="button" title="Repetir uno (ON/OFF)">🔂</button>
+<button class="icon-btn more-btn only-mobile" id="moreBtn" type="button" title="Más controles">⋯</button>
+    
+                <div class="volwrap only-desktop">
+                    <button class="icon-btn" id="mute" type="button" title="Silenciar">🔇</button>
+                    <input id="volume" type="range" min="0" max="1.0" step="0.01" value="1" aria-label="Volumen">
+                </div>
+            </div>
+    
+            <div class="progress" aria-label="Barra de progreso">
+                <div class="time" id="cur">0:00</div>
+                <div class="bar" id="bar" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="fill" id="fill"></div></div>
+                <div class="time" id="dur">0:00</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MINI -->
+    <div class="mini" id="mini">
+</div>
+    
+    <!-- SHEETS (móvil) -->
+    <div class="sheet" id="filtersSheet" role="dialog" aria-modal="true" aria-label="Filtros">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3>Filtros</h3>
+        <button class="icon-btn" id="filtersClose" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="row">
+        <div class="chips" id="provChips_m">
+          <span class="chip on" data-prov="archive">Internet Archive</span>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="sheet" id="ctrlSheet" role="dialog" aria-modal="true" aria-label="Controles">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3>Controles</h3>
+        <button class="icon-btn" id="ctrlClose" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="row">
+        <button class="sm-btn" id="btnShuffle" type="button">🔀 Aleatorio</button>
+        <button class="sm-btn" id="btnRepeat" type="button">🔂 Repetir uno</button>
+      </div>
+      <div class="row">
+        <label class="switch"><input id="crossfadeToggle_m" type="checkbox"/><span>Crossfade</span></label>
+      </div>
+    </div>
+    
+    <div class="sheet" id="trackSheet" role="dialog" aria-modal="true" aria-label="Pista">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3 id="trackInfo">Pista</h3>
+        <button class="icon-btn" id="trackClose" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="row">
+        <a class="btn secondary" id="tSource" href="#" target="_blank" rel="noopener">Ver fuente</a>
+        <button class="btn" id="tAdd" type="button">Agregar a playlist</button>
+      </div>
+    </div>
+
+<div id="announcer" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" aria-live="polite"></div>
+    
+    <script src="script.js"></script>
+<canvas id="viz" aria-hidden="true"></canvas>
+</body>
+</html>
